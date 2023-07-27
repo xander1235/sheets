@@ -3,8 +3,10 @@ package com.triffy.sheet.services;
 
 import com.google.api.services.sheets.v4.model.*;
 import com.triffy.sheet.config.GoogleAuthorizationConfig;
+import com.triffy.sheet.exceptions.BadRequestException;
 import com.triffy.sheet.model.User;
 import com.triffy.sheet.services.base.UserService;
+import com.triffy.sheet.validators.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) throws GeneralSecurityException, IOException {
+        if (!Validator.isValidMobileNumber(user.getMobile())) {
+            throw new BadRequestException("Invalid mobile number");
+        }
         List<Object> list = Arrays.asList(user.getName(), user.getMobile());
         log.info("user: {}", user);
         appendToLastRow("Sheet1", list);
