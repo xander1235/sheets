@@ -6,9 +6,11 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,14 +25,12 @@ public class GoogleAuthorizationConfig {
 
     @Value("${application.name}")
     private String applicationName;
-    @Value("${credentials.content}")
-    private String credentialsContent;
-
 
     @Bean
     public Sheets getGoogleSheetsService() throws IOException, GeneralSecurityException {
         List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
 
+        String credentialsContent = System.getenv("secret_account_secret");
         // Initializing the service:
         GoogleCredential googleCredentials;
         try(InputStream inputSteam = new ByteArrayInputStream(credentialsContent.getBytes())) {
