@@ -29,8 +29,11 @@ public class UserServiceImpl implements UserService {
     @Value("${spreadsheet.id}")
     private String spreadsheetId;
 
-    @Autowired
-    private GoogleAuthorizationConfig googleAuthorizationConfig;
+    private final Sheets sheetsService;
+
+    public UserServiceImpl(Sheets sheetsService) {
+        this.sheetsService = sheetsService;
+    }
 
     @Override
     public void addUser(User user) throws GeneralSecurityException, IOException {
@@ -45,7 +48,6 @@ public class UserServiceImpl implements UserService {
     private void appendToLastRow(String sheetName, List<Object> values) throws IOException, GeneralSecurityException {
         String range = sheetName + "!A:A"; // Assuming you want to check the last row of the first column
 
-        Sheets sheetsService = googleAuthorizationConfig.getSheetsService();
         ValueRange response = sheetsService.spreadsheets().values()
                 .get(spreadsheetId, range)
                 .execute();
