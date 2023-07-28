@@ -26,11 +26,14 @@ public class GoogleAuthorizationConfig {
     @Value("${application.name}")
     private String applicationName;
 
+    @Autowired
+    private Environment environment;
+
     @Bean
     public Sheets getGoogleSheetsService() throws IOException, GeneralSecurityException {
         List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
 
-        String credentialsContent = System.getenv("secret_account_secret");
+        String credentialsContent = environment.getProperty("service_account_secret");
         // Initializing the service:
         GoogleCredential googleCredentials;
         try(InputStream inputSteam = new ByteArrayInputStream(credentialsContent.getBytes())) {
