@@ -32,6 +32,8 @@ public class GoogleAuthorizationConfig {
     private String credentialsFilePath;
     @Value("${tokens.directory.path}")
     private String tokensDirectoryPath;
+    @Value("${current.host}")
+    private String currentHost;
 
     public GoogleAuthorizationConfig(){
     }
@@ -48,7 +50,7 @@ public class GoogleAuthorizationConfig {
                 .setAccessType("offline")
                 .build();
 
-        LocalServerReceiver localServerReceiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        LocalServerReceiver localServerReceiver = new LocalServerReceiver.Builder().setHost(currentHost).build();
 
         return new AuthorizationCodeInstalledApp(
                 flow, localServerReceiver)
