@@ -20,7 +20,7 @@ EXPOSE 8080
 COPY --from=builder /app/target/$JAR_FILE $PROJECT_HOME/
 
 COPY --from=builder /app/$RESOURCES/application.properties $PROJECT_HOME/
-COPY --from=builder /app/$RESOURCES/credentials.json $PROJECT_HOME/
+COPY --from=builder /app/$RESOURCES/service_account_secret.json $PROJECT_HOME/
 
 WORKDIR $PROJECT_HOME
 
