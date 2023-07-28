@@ -33,7 +33,8 @@ public class GoogleAuthorizationConfig {
     public Sheets getGoogleSheetsService() throws IOException, GeneralSecurityException {
         List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
 
-        String credentialsContent = environment.getProperty("service_account_secret");
+
+        String credentialsContent = System.getenv("SERVICE_SECRET");
         // Initializing the service:
         GoogleCredential googleCredentials;
         try(InputStream inputSteam = new ByteArrayInputStream(credentialsContent.getBytes())) {
