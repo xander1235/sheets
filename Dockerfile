@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN echo "logging env variable $SERVICE_SECRET"
+
 RUN mvn clean install 
 
 FROM openjdk:slim-buster
@@ -16,6 +18,8 @@ RUN mkdir /usr/share/triffy
 ENV PROJECT_HOME /usr/share/triffy
 
 EXPOSE 8080
+
+RUN echo "logging env variable $SERVICE_SECRET"
 
 COPY --from=builder /app/target/$JAR_FILE $PROJECT_HOME/
 
