@@ -30,7 +30,6 @@ public class GoogleSheetsConfig {
     private GoogleSheetsConfig() throws IOException, GeneralSecurityException {
         List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
 
-        log.info("environment variables: {}", System.getenv());
         String credentialsContent = System.getenv("SERVICE_SECRET");
         applicationName = applicationName != null && !applicationName.isEmpty() ? applicationName : System.getenv("APPLICATION_NAME");
         if (credentialsContent == null || credentialsContent.isEmpty()) {

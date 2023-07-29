@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Invalid mobile number");
         }
         List<Object> list = Arrays.asList(user.getName(), user.getMobile());
-        log.info("user: {}", user);
         appendToLastRow("Sheet1", list);
     }
 
@@ -58,7 +57,7 @@ public class UserServiceImpl implements UserService {
                 .setIncludeValuesInResponse(true)
                 .execute();
 
-        System.out.printf("Data appended to row %d.", lastRow);
+        log.info("Data appended to row {}. with value {}", lastRow, values);
     }
 
 
